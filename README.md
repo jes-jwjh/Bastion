@@ -14,22 +14,41 @@ Bastion catches all three, in real time, per session - so one broken part never 
 
 ## Install
 
-```bash
 pip install bastion-runtime
 
+## Usage - one line swap
 
-# Before:
+Before:
 from openai import OpenAI
 client = OpenAI()
 response = client.chat.completions.create(model="gpt-4o-mini", messages=[...])
 
-# After:
+After:
 from bastion import Bastion
 client = Bastion()
 response = client.chat.completions.create(
-    session_id="user-123",   # the only new thing you add
+    session_id="user-123",
     model="gpt-4o-mini",
     messages=[...],
 )
 
-ls
+session_id identifies which user, agent, or workflow a call belongs to. Bastion tracks each session independently - if one session gets blocked, every other session keeps working normally.
+
+## What it catches
+
+Semantic Loop Detector - converts recent messages into embeddings and measures actual similarity. If a session asks a near-duplicate question 3 times in a row, even reworded, it kills that session.
+
+Retry Storm Detector - if a session fires more than 10 calls in a 1-second window, Bastion forces an immediate cooldown.
+
+Micro-Budget Circuit Breaker - tracks spend and call count per session, not per account. Cross the cap and only that session is blocked. Supports an optional auto-reset period.
+
+## Running tests
+
+pip install pytest
+pytest test_bastion.py -v
+
+Tests use a fake embedding function so they run instantly, with no API key required.
+
+## Status
+
+Core protection logic is built and tested, including live verification against the OpenAI API. Currently OpenAI-only; other providers planned.
