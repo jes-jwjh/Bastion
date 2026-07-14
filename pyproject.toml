@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bastion-runtime"
+version = "0.1.0"
+description = "A lightweight runtime protection layer for AI agents - stops loops, retry storms, and runaway spend before they reach the model provider."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Jesse Howell"}
+]
+dependencies = [
+    "openai>=1.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/bastion"
