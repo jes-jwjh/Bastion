@@ -40,7 +40,7 @@ Semantic Loop Detector - converts recent messages into embeddings and measures a
 
 Retry Storm Detector - if a session fires more than 10 calls in a 1-second window, Bastion forces an immediate cooldown.
 
-Micro-Budget Circuit Breaker - tracks spend and call count per session, not per account. Cross the cap and only that session is blocked. Supports an optional auto-reset period.
+Micro-Budget Circuit Breaker - tracks spend and call count for each individual session separately. If one session goes over its limit, only that session gets blocked. Every other user or agent in your app carries on working normally. Completely unaffected.
 
 ## Running tests
 
