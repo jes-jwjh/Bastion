@@ -14,25 +14,25 @@ Bastion catches all three, in real time, per session - so one broken part never 
 
 ## Install
 
-pip install bastion-runtime
+    pip install bastion-runtime
 
 ## Usage - one line swap
 
 Before:
 
-from openai import OpenAI
-client = OpenAI()
-response = client.chat.completions.create(model="gpt-4o-mini", messages=[])
+    from openai import OpenAI
+    client = OpenAI()
+    response = client.chat.completions.create(model="gpt-4o-mini", messages=[])
 
 After:
 
-from bastion import Bastion
-client = Bastion()
-response = client.chat.completions.create(
-    session_id="user-123",
-    model="gpt-4o-mini",
-    messages=[],
-)
+    from bastion import Bastion
+    client = Bastion()
+    response = client.chat.completions.create(
+        session_id="user-123",
+        model="gpt-4o-mini",
+        messages=[],
+    )
 
 session_id identifies which user, agent, or workflow a call belongs to. Bastion tracks each session independently - if one session gets blocked, every other session keeps working normally.
 
@@ -46,33 +46,33 @@ Micro-Budget Circuit Breaker - tracks spend and call count for each individual s
 
 ## Handling blocks
 
-from bastion import LoopDetected, RetryStormDetected, BudgetExceeded
+    from bastion import LoopDetected, RetryStormDetected, BudgetExceeded
 
-try:
-    response = client.chat.completions.create(session_id="user-123")
-except LoopDetected as e:
-    pass
-except RetryStormDetected as e:
-    pass
-except BudgetExceeded as e:
-    pass
+    try:
+        response = client.chat.completions.create(session_id="user-123")
+    except LoopDetected as e:
+        pass
+    except RetryStormDetected as e:
+        pass
+    except BudgetExceeded as e:
+        pass
 
 ## Configuration
 
-from bastion import Bastion, BastionConfig
+    from bastion import Bastion, BastionConfig
 
-config = BastionConfig(
-    loop_similarity_threshold=0.75,
-    retry_max_calls=10,
-    max_cost_usd_per_session=2.00,
-    reset_period_seconds=2592000,
-)
-client = Bastion(config=config)
+    config = BastionConfig(
+        loop_similarity_threshold=0.75,
+        retry_max_calls=10,
+        max_cost_usd_per_session=2.00,
+        reset_period_seconds=2592000,
+    )
+    client = Bastion(config=config)
 
 ## Running tests
 
-pip install pytest
-pytest test_bastion.py -v
+    pip install pytest
+    pytest test_bastion.py -v
 
 Tests use a fake embedding function so they run instantly, with no API key required.
 
