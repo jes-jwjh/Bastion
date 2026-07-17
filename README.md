@@ -52,3 +52,11 @@ Tests use a fake embedding function so they run instantly, with no API key requi
 ## Status
 
 Core protection logic is built and tested, including live verification against the OpenAI API. Currently OpenAI-only; other providers planned.
+
+## Free tier
+
+Bastion includes a free tier: 10,000 protected API calls per month, resetting automatically every month. All three core features are included at no cost, with no credit card required. Paid tiers with higher limits are planned for later.
+
+## License
+
+This project is licensed under the Business Source License 1.1 - free to use, modify, and self-host, but not to resell as a competing commercial service. See LICENSE for details.
