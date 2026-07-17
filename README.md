@@ -12,19 +12,21 @@ Autonomous AI agents fail in specific, predictable ways:
 
 Bastion catches all three, in real time, per session - so one broken part never takes down everything else.
 
-## Install
+## Usage - one line swap
+
+This is all you need to get started. Install the package, then swap two lines in your existing code.
+
+Install:
 
     pip install bastion-runtime
 
-## Usage - one line swap
-
-Before:
+Your code currently looks like this (shown for comparison only, do not paste this part):
 
     from openai import OpenAI
     client = OpenAI()
     response = client.chat.completions.create(model="gpt-4o-mini", messages=[])
 
-After:
+Change it to this (paste this part):
 
     from bastion import Bastion
     client = Bastion()
@@ -36,6 +38,8 @@ After:
 
 session_id identifies which user, agent, or workflow a call belongs to. Bastion tracks each session independently - if one session gets blocked, every other session keeps working normally.
 
+Everything below this point is optional. Bastion works fully with the defaults shown above - only read further if you want to handle errors specifically or change any settings.
+
 ## What it catches
 
 Semantic Loop Detector - converts recent messages into embeddings and measures actual similarity. If a session asks a near-duplicate question 3 times in a row, even reworded, it kills that session.
@@ -44,7 +48,9 @@ Retry Storm Detector - if a session fires more than 10 calls in a 1-second windo
 
 Micro-Budget Circuit Breaker - tracks spend and call count for each individual session separately. If one session goes over its limit, only that session gets blocked. Every other user or agent in your app carries on working normally. Completely unaffected.
 
-## Handling blocks
+## Handling blocks (optional)
+
+If you want to catch and respond to Bastion blocking something specifically, paste this instead of a plain try/except:
 
     from bastion import LoopDetected, RetryStormDetected, BudgetExceeded
 
@@ -57,7 +63,9 @@ Micro-Budget Circuit Breaker - tracks spend and call count for each individual s
     except BudgetExceeded as e:
         pass
 
-## Configuration
+## Configuration (optional)
+
+Every setting below already has a sensible default. You only need this if you want to change something specific - for example, a stricter loop detector or a higher budget cap:
 
     from bastion import Bastion, BastionConfig
 
@@ -75,10 +83,6 @@ Micro-Budget Circuit Breaker - tracks spend and call count for each individual s
     pytest test_bastion.py -v
 
 Tests use a fake embedding function so they run instantly, with no API key required.
-
-## Free tier
-
-Bastion includes a free tier: 10,000 protected API calls per month, resetting automatically every month. All three core features are included at no cost, with no credit card required. Paid tiers with higher limits are planned for later.
 
 ## License
 
