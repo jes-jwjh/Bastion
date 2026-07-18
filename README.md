@@ -40,6 +40,10 @@ session_id identifies which user, agent, or workflow a call belongs to. Bastion 
 
 Everything below this point is optional. Bastion works fully with the defaults shown above - only read further if you want to handle errors specifically or change any settings.
 
+## Free tier
+
+Bastion is currently free to use, with a limit of 10,000 protected calls per month across your account. This resets automatically every month - no signup, no credit card required. A paid tier with higher limits is planned - join the waitlist below if you would like early access.
+
 ## What it catches
 
 Semantic Loop Detector - converts recent messages into embeddings and measures actual similarity. If a session asks a near-duplicate question 3 times in a row, even reworded, it kills that session.
