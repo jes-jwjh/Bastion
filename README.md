@@ -91,3 +91,7 @@ This project is licensed under the Business Source License 1.1 - free to use, mo
 ## Status
 
 Core protection logic is built and tested, including live verification against the OpenAI API. Currently OpenAI-only; other providers planned.
+
+## Coming soon
+
+Paid tiers with higher usage limits are planned. Join the waitlist: https://tally.so/r/7RglMA
